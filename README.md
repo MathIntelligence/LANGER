@@ -2,6 +2,9 @@
 
 **LANGER** predicts protein–REE binding affinity (`logD`) from sequence embeddings, ion descriptors, and geometric graph learning (GGL) features.
 
+<img width="1408" height="1056" alt="langer" src="https://github.com/user-attachments/assets/475ef18c-d585-40cf-9890-5338db06d00b" />
+
+
 ## Repository layout
 
 | Path | Role |
