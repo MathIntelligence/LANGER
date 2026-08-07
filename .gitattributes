@@ -1,0 +1,2 @@
+# Shell scripts must use LF for SLURM (sbatch) on Linux clusters
+*.sh text eol=lf

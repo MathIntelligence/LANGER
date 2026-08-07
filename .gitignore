@@ -1,0 +1,23 @@
+# Large / regenerable artifacts
+data/data_3d/
+data/*.json
+data/selected_kernel_embeddings/
+data/fold_models/
+data/fold_results*.csv
+data/*_silhouette_scores.csv
+data/ggl_feature_cache/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
