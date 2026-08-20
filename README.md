@@ -19,16 +19,6 @@
 | `data/cluster_protein_families.py` | Rebuild cluster labels |
 | `utils/` | Kernels, ion descriptors, atom/ion radii |
 
-## Model
-
-- **Protein**: ESM-2 650M → 1280-D → `LayerNorm` → `Linear(512)` → ReLU  
-- **Ion**: 11 descriptors (raw in JSON; per-fold `StandardScaler` in `main.py`) → `LayerNorm` → `Linear(128)` → ReLU  
-- **GGL** (optional, kernel **0**): per-fold `log1p` on `*_COUNTS` + z-score → `LayerNorm` → `Linear(256)` → ReLU  
-- **Fusion**: concat → `LayerNorm` → FFN `768 → 384 → 128 → 32 → 1`  
-- **Training**: 100 epochs/fold; checkpoint = best val Pearson (cluster) or lowest val MSE (ion)
-
-Expected fold-mean Pearson (protein + ion): **ion ~0.82**, **cluster ~0.57**.
-
 ## Setup
 
 ```bash
