@@ -23,7 +23,7 @@
 
 ```bash
 pip install -r requirements.txt
-tar -xzf data/data_3d.tar.gz -C data   # only needed for GGL
+tar -xzf data/data_3d.tar.gz -C data   
 ```
 
 Optional: `export REE_DATA_3D_ROOT=/path/to/data_3d`
@@ -38,19 +38,31 @@ python src/dataset_creation.py \
   --output_json data/dataset_embeddings.json
 ```
 
-**Protein + ion + GGL (kernel 0):**
+**Protein + ion + GGL for ion cluster (kernel 1440):**
 
 ```bash
 python src/dataset_creation.py \
   --input_csv data/dataset.csv \
-  --output_json data/dataset_embeddings_ggl.json \
+  --output_json data/dataset_embeddings_ggl_ion.json \
   --generate_ggl \
-  --ggl_data_folder data/data_3d
+  --ggl_data_folder data/data_3d \
+  --ggl_kernel_index 1440
+```
+
+**Protein + ion + GGL for protein cluster (kernel 0):**
+
+```bash
+python src/dataset_creation.py \
+  --input_csv data/dataset.csv \
+  --output_json data/dataset_embeddings_ggl_cluster.json \
+  --generate_ggl \
+  --ggl_data_folder data/data_3d \
+  --ggl_kernel_index 0
 ```
 
 ## 2) Train
 
-**Ion CV:**
+**Ion CV (protein + ion):**
 
 ```bash
 python main.py \
@@ -59,7 +71,7 @@ python main.py \
   --results_csv data/fold_results_ion.csv
 ```
 
-**Cluster CV:**
+**Protein CV (protein + ion):**
 
 ```bash
 python main.py \
@@ -68,7 +80,23 @@ python main.py \
   --results_csv data/fold_results_cluster.csv
 ```
 
-With GGL, point `--dataset_path` at `data/dataset_embeddings_ggl.json`.
+**Ion CV with best GGL (kernel 1440):**
+
+```bash
+python main.py \
+  --dataset_path data/dataset_embeddings_ggl_ion.json \
+  --split_mode ion \
+  --results_csv data/fold_results_ion_ggl.csv
+```
+
+**Protein CV with best GGL (kernel 0):**
+
+```bash
+python main.py \
+  --dataset_path data/dataset_embeddings_ggl_cluster.json \
+  --split_mode cluster \
+  --results_csv data/fold_results_cluster_ggl.csv
+```
 
 The average row in `results_csv` reports fold-mean / pooled `rmse`, `mse`, `pearson`, and `ci`.
 
@@ -81,3 +109,4 @@ python data/cluster_protein_families.py \
 ```
 
 More detail on tables and paths: [`data/README.md`](data/README.md).
+
